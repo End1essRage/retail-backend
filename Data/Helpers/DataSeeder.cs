@@ -13,27 +13,36 @@ namespace retail_backend.Data.Helpers
         {
             var categories = new List<Category>
             {
-                new Category(){Name = "Напитки"},
-                new Category(){Name = "Булочки"},
-                new Category(){Name = "Круасаны"},
+                new Category(){Name = "Осетинские пироги"},
+                new Category(){Name = "Хачапури"},
+                new Category(){Name = "Сеты"},
                 new Category(){Name = "Пицца"},
-                new Category(){Name = "Другое"},
+                new Category(){Name = "Выпечка"},
+                new Category(){Name = "Хлеб"},
+                new Category(){Name = "Десерты"},
+                new Category(){Name = "Напитки"},
             };
 
             var products = new List<Product>{
-                new Product(){Name = "Пиво", CategoryId = 1},
-                new Product(){Name = "Пиво", CategoryId = 1},
-                new Product(){Name = "Пиво", CategoryId = 1},
-                new Product(){Name = "Пиво", CategoryId = 2},
-                new Product(){Name = "Пиво", CategoryId = 2},
-                new Product(){Name = "Пиво", CategoryId = 2},
-                new Product(){Name = "Пиво", CategoryId = 3},
-                new Product(){Name = "Пиво", CategoryId = 3},
-                new Product(){Name = "Пиво", CategoryId = 4},
-                new Product(){Name = "Пиво", CategoryId = 5},
-                new Product(){Name = "Пиво", CategoryId = 5},
-                new Product(){Name = "Пиво", CategoryId = 5},
-                new Product(){Name = "Пиво", CategoryId = 5},
+                new Product(){Name = "С Мясом", CategoryId = 1, Description = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+                new Product(){Name = "С Картофелем", CategoryId = 1, Description = ""},
+                new Product(){Name = "С Индейкой", CategoryId = 1, Description = ""},
+                new Product(){Name = "По-имеретински", CategoryId = 2, Description = ""},
+                new Product(){Name = "По-мигрельски", CategoryId = 2, Description = ""},
+                new Product(){Name = "Пщ-аджарски с мясом", CategoryId = 2, Description = ""},
+                new Product(){Name = "Хачапури по-имеретински, по аджарски и кока кола", CategoryId = 3, Description = ""},
+                new Product(){Name = "Сет с осетинскими пирогами", CategoryId = 3, Description = ""},
+                new Product(){Name = "Мясная", CategoryId = 4, Description = ""},
+                new Product(){Name = "Плюшка Московская", CategoryId = 5, Description = ""},
+                new Product(){Name = "Круасан классический", CategoryId = 5, Description = ""},
+                new Product(){Name = "Улитка с маком", CategoryId = 5, Description = ""},
+                new Product(){Name = "Улитка с маком в шоколадной глазури", CategoryId = 5, Description = ""},
+                new Product(){Name = "батон нарезной сна закваске", CategoryId = 6, Description = ""},
+                new Product(){Name = "дарницкий хлеб на закваске", CategoryId = 6, Description = ""},
+                new Product(){Name = "Безе на палочке", CategoryId = 7, Description = ""},
+                new Product(){Name = "Безе в стакане", CategoryId = 7, Description = ""},
+                new Product(){Name = "Кока-кола", CategoryId = 8, Description = ""},
+                new Product(){Name = "Фанта", CategoryId = 8, Description = ""},
             };
 
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
