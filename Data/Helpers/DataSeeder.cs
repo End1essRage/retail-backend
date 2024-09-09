@@ -13,12 +13,12 @@ namespace retail_backend.Data.Helpers
         {
             var categories = new List<Category>
             {
-                new Category(){Name = "Осетинские пироги"},
+                new Category(){Id = 1, Name = "Осетинские пироги", Parent = 2},
                 new Category(){Name = "Хачапури"},
                 new Category(){Name = "Сеты"},
                 new Category(){Name = "Пицца"},
                 new Category(){Name = "Выпечка"},
-                new Category(){Name = "Хлеб"},
+                new Category(){Name = "Хлеб", Parent = 5},
                 new Category(){Name = "Десерты"},
                 new Category(){Name = "Напитки"},
             };

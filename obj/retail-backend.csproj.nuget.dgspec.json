@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/home/end1essrage/Projects/retail-backend/retail-backend.csproj": {}
+    "D:\\Projects\\retail\\retail-backend\\retail-backend.csproj": {}
   },
   "projects": {
-    "/home/end1essrage/Projects/retail-backend/retail-backend.csproj": {
+    "D:\\Projects\\retail\\retail-backend\\retail-backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/end1essrage/Projects/retail-backend/retail-backend.csproj",
+        "projectUniqueName": "D:\\Projects\\retail\\retail-backend\\retail-backend.csproj",
         "projectName": "retail-backend",
-        "projectPath": "/home/end1essrage/Projects/retail-backend/retail-backend.csproj",
-        "packagesPath": "/home/end1essrage/.nuget/packages/",
-        "outputPath": "/home/end1essrage/Projects/retail-backend/obj/",
+        "projectPath": "D:\\Projects\\retail\\retail-backend\\retail-backend.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\retail\\retail-backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/end1essrage/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,6 +34,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -78,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.108/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
