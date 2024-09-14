@@ -7,54 +7,18 @@ using retail_backend.Data.Entities;
 
 namespace retail_backend.Data.Repositories
 {
-    public class ProductLocalRepository : IProductRepository
+    public class ProductLocalRepository : BaseRepository<Product>, IProductRepository
     {
         private readonly AppContext _context;
 
-        public ProductLocalRepository(AppContext context)
+        public ProductLocalRepository(AppContext context) : base(context)
         {
             _context = context;
-        }
-        public async Task CreateProduct(Product product)
-        {
-            await _context.Products.AddAsync(product);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteProductById(int id)
-        {
-            var product = await GetProductById(id);
-            if (product == null)
-                throw new ArgumentException("Not Found");
-
-            _context.Remove(product);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<List<Product>> GetAllProducts()
-        {
-            return await _context.Products.ToListAsync();
-        }
-
-        public async Task<Product> GetProductById(int id)
-        {
-            return await _context.Products.SingleOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<List<Product>> GetProductsByCategoryId(int categoryId)
         {
             return await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
-        }
-
-        public async Task UpdateProduct(Product product)
-        {
-            var productEntity = await GetProductById(product.Id);
-            if (productEntity == null)
-                throw new ArgumentException("Not Found");
-
-            productEntity = product;
-
-            await _context.SaveChangesAsync();
         }
     }
 }

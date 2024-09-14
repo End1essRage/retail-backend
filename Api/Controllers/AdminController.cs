@@ -36,13 +36,13 @@ namespace retail_backend.Api.Controllers
         public async Task<ActionResult<List<Product>>> GetAllProducts()
         {
             Console.WriteLine("--> hitted get all products");
-            return await _productRepository.GetAllProducts();
+            return await _productRepository.GetAllAsync();
         }
 
         [HttpGet("category")]
         public async Task<ActionResult<List<Category>>> GetAllCategories()
         {
-            return await _categoryRepository.GetAllCategories();
+            return await _categoryRepository.GetAllAsync();
         }
 
         [HttpGet("product/{id}")]
@@ -51,7 +51,7 @@ namespace retail_backend.Api.Controllers
             Product product;
             try
             {
-                product = await _productRepository.GetProductById(id);
+                product = await _productRepository.GetByIdAsync(id);
             }
             catch (ArgumentException ex)
             {
@@ -71,7 +71,7 @@ namespace retail_backend.Api.Controllers
             Category category;
             try
             {
-                category = await _categoryRepository.GetCategoryById(id);
+                category = await _categoryRepository.GetByIdAsync(id);
             }
             catch (ArgumentException ex)
             {
@@ -89,7 +89,8 @@ namespace retail_backend.Api.Controllers
         public async Task<ActionResult> CreateCategory(CategoryCreateDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
-            await _categoryRepository.CreateCategory(category);
+            _categoryRepository.Create(category);
+            var isOk = await _categoryRepository.SaveChangesAsync();
             return Ok();
         }
 
@@ -97,21 +98,31 @@ namespace retail_backend.Api.Controllers
         public async Task<ActionResult> CreateProduct(ProductCreateDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
-            await _productRepository.CreateProduct(product);
+            _productRepository.Create(product);
+            var isOk = await _categoryRepository.SaveChangesAsync();
             return Ok();
         }
 
         [HttpDelete("product")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
-            await _productRepository.DeleteProductById(id);
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
+                return NotFound();
+
+            _productRepository.Delete(product);
+            var isOk = await _categoryRepository.SaveChangesAsync();
             return Ok();
         }
 
         [HttpDelete("category")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
-            await _categoryRepository.DeleteCategoryById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
+                return NotFound();
+            _categoryRepository.Delete(category);
+            var isOk = await _categoryRepository.SaveChangesAsync();
             return Ok();
         }
 
@@ -119,15 +130,17 @@ namespace retail_backend.Api.Controllers
         [HttpPut("product")]
         public async Task<ActionResult<Product>> UpdateProduct(Product product)
         {
-            await _productRepository.UpdateProduct(product);
-            return await _productRepository.GetProductById(product.Id);
+            _productRepository.Update(product);
+            var isOk = await _categoryRepository.SaveChangesAsync();
+            return await _productRepository.GetByIdAsync(product.Id);
         }
 
         [HttpPut("category")]
         public async Task<ActionResult<Category>> UpdateCategory(Category category)
         {
-            await _categoryRepository.UpdateCategory(category);
-            return await _categoryRepository.GetCategoryById(category.Id);
+            _categoryRepository.Update(category);
+            var isOk = await _categoryRepository.SaveChangesAsync();
+            return await _categoryRepository.GetByIdAsync(category.Id);
         }
     }
 }
