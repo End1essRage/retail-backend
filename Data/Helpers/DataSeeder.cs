@@ -9,7 +9,7 @@ namespace retail_backend.Data.Helpers
 {
     public static class DataSeeder
     {
-        public static void Seed(IApplicationBuilder applicationBuilder)
+        public static async void Seed(IApplicationBuilder applicationBuilder)
         {
             var categories = new List<Category>
             {
@@ -48,10 +48,12 @@ namespace retail_backend.Data.Helpers
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 var categoryRepository = serviceScope.ServiceProvider.GetService<ICategoryRepository>();
-                categories.ForEach(async category => await categoryRepository.CreateCategory(category));
+                categories.ForEach(category => categoryRepository.Create(category));
 
                 var productRepository = serviceScope.ServiceProvider.GetService<IProductRepository>();
-                products.ForEach(async product => await productRepository.CreateProduct(product));
+                products.ForEach(product => productRepository.Create(product));
+
+                await categoryRepository.SaveChangesAsync();
             }
         }
     }

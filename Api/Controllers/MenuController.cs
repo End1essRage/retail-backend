@@ -29,7 +29,7 @@ namespace retail_backend.Api.Controllers
         public async Task<ActionResult<List<CategoryReadDto>>> GetCategories()
         {
             Console.WriteLine("--> Hitted GetCategories");
-            var categories = await _categoryRepository.GetAllCategories();
+            var categories = await _categoryRepository.GetAllAsync();
             return Ok(_mapper.Map<List<CategoryReadDto>>(categories));
         }
 
@@ -57,7 +57,7 @@ namespace retail_backend.Api.Controllers
         public async Task<ActionResult<ProductReadDto>> GetProductInfo(int id)
         {
             Product product;
-            product = await _productRepository.GetProductById(id);
+            product = await _productRepository.GetByIdAsync(id);
             if (product == null)
                 return NotFound();
 

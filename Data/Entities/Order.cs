@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace retail_backend.Data.Entities
 {
-    public class Order
+    public class Order : BaseEntity
     {
-        public int Id { get; set; }
         public int BuyerId { get; set; }
         public TelegramUser Buyer { get; set; }
         public int ManagerId { get; set; }
