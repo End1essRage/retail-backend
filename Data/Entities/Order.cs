@@ -1,29 +1,35 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using retail_backend.Data.Models;
+using Newtonsoft.Json;
 
 namespace retail_backend.Data.Entities
 {
     public class Order : BaseEntity
     {
-        public int BuyerId { get; set; }
-        public TelegramUser Buyer { get; set; }
-        public int ManagerId { get; set; }
-        public TelegramUser Manager { get; set; }
-        public Status Status { get; set; }
+        //public int ClientId { get; set; }
+        //public virtual TelegramUser Client { get; set; }
+        // public int ManagerId { get; set; }
+        // public TelegramUser Manager { get; set; }
 
-        // Хранение позиций в виде JSON
-        public List<Position> Positions { get; set; } = new List<Position>();
+        public string ClientUserName { get; set; }
+        public OrderStatus Status { get; set; }
+        public string PositionsJson { get; set; }
+
+        [NotMapped]
+        public Dictionary<int, int> Positions
+        {
+            get => string.IsNullOrEmpty(PositionsJson) ? new Dictionary<int, int>() : JsonConvert.DeserializeObject<Dictionary<int, int>>(PositionsJson);
+            set => PositionsJson = JsonConvert.SerializeObject(value);
+        }
+
     }
 
-    public class Position
-    {
-        public int ProductId { get; set; }
-        public int Count { get; set; }
-    }
-
-    public enum Status
+    public enum OrderStatus
     {
         New,
         Informed,
