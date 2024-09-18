@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using retail_backend.Data.Models;
 
 namespace retail_backend.Api.Dtos
 {

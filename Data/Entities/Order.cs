@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using retail_backend.Data.Models;
 using Newtonsoft.Json;
 
 namespace retail_backend.Data.Entities
@@ -15,7 +14,7 @@ namespace retail_backend.Data.Entities
         //public virtual TelegramUser Client { get; set; }
         // public int ManagerId { get; set; }
         // public TelegramUser Manager { get; set; }
-
+        public DateTime DateCreation { get; set; } = DateTime.Now;
         public string ClientUserName { get; set; }
         public OrderStatus Status { get; set; }
         public string PositionsJson { get; set; }
@@ -32,9 +31,8 @@ namespace retail_backend.Data.Entities
     public enum OrderStatus
     {
         New,
-        Informed,
-        Processed,
-        Closed,
-        Canceled
+        Accepted,
+        Completed,
+        Cancelled
     }
 }

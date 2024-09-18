@@ -20,5 +20,10 @@ namespace retail_backend.Data.Repositories
         {
             return await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
         }
+
+        public async Task<List<Product>> GetProductsByIds(List<int> ids)
+        {
+            return await _context.Products.Where(p => ids.Contains(p.Id)).ToListAsync();
+        }
     }
 }

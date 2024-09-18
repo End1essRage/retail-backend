@@ -17,6 +17,8 @@ namespace retail_backend.Api.Profiles
 
             CreateMap<Category, CategoryReadDto>();
             CreateMap<CategoryCreateDto, Category>();
+
+            CreateMap<Order, OrderShortReadDto>();
         }
     }
 }

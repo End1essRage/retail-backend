@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using retail_backend.Data.Entities;
-using retail_backend.Data.Models;
 
 namespace retail_backend.Data
 {

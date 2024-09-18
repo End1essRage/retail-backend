@@ -29,15 +29,15 @@ namespace retail_backend.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Order>>> GetOrders(string userName)
+        public async Task<ActionResult<List<OrderShortReadDto>>> GetOrders(string userName)
         {
-            return Ok(userName);
+            return Ok(await _orderService.GetUserOrders(userName));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult<OrderReadDto>> GetOrder(int id)
         {
-            return Ok(id);
+            return Ok(await _orderService.GetOrderById(id));
         }
     }
 }
