@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using retail_backend.Data.Helpers;
 
 namespace retail_backend.Data.Entities
 {
@@ -16,7 +17,7 @@ namespace retail_backend.Data.Entities
         // public TelegramUser Manager { get; set; }
         public DateTime DateCreation { get; set; } = DateTime.Now;
         public string ClientUserName { get; set; }
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
         public string PositionsJson { get; set; }
 
         [NotMapped]

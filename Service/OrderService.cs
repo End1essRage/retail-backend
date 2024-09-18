@@ -27,7 +27,7 @@ namespace retail_backend.Service
         {
             var order = new Order()
             {
-                Status = DataConstants.OrderStatus_New,
+                Status = OrderStatus.New,
                 ClientUserName = request.UserName,
                 Positions = request.Positions
             };
@@ -58,7 +58,7 @@ namespace retail_backend.Service
             var productDtos = _mapepr.Map<List<ProductReadDto>>(products);
 
             var orderDto = new OrderReadDto();
-            orderDto.Status = DataConstants.OrderStatus_New;
+            orderDto.Status = DataConstants.OrderStatusDict[order.Status];
             orderDto.Id = order.Id;
 
             foreach (var pos in order.Positions)
@@ -77,6 +77,15 @@ namespace retail_backend.Service
             }
 
             return orderDto;
+        }
+
+        public async Task ChangeOrderStatus(int orderId, int targetStatus)
+        {
+            var order = await _orderRepo.GetByIdAsync(orderId);
+            order.Status = (OrderStatus)targetStatus;
+
+            _orderRepo.Update(order);
+            await _orderRepo.SaveChangesAsync();
         }
     }
 }

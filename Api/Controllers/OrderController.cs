@@ -34,9 +34,19 @@ namespace retail_backend.Api.Controllers
             return Ok(await _orderService.GetUserOrders(userName));
         }
 
+        //auth or check user
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderReadDto>> GetOrder(int id)
         {
+            return Ok(await _orderService.GetOrderById(id));
+        }
+
+
+        //auth or check user
+        [HttpPatch("{id}/status")]
+        public async Task<ActionResult<OrderReadDto>> ChangeStatus(int id, [FromQuery] int targetStatus)
+        {
+            await _orderService.ChangeOrderStatus(id, targetStatus);
             return Ok(await _orderService.GetOrderById(id));
         }
     }

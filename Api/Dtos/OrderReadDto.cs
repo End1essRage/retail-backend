@@ -17,6 +17,7 @@ namespace retail_backend.Api.Dtos
         public int Id { get; set; }
         public DateTime DateCreation { get; set; }
         public int Status { get; set; } = 0;
+        public string StatusName { get; set; }
     }
 
     public class Position
