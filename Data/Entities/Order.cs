@@ -16,7 +16,7 @@ namespace retail_backend.Data.Entities
         // public TelegramUser Manager { get; set; }
         public DateTime DateCreation { get; set; } = DateTime.Now;
         public string ClientUserName { get; set; }
-        public OrderStatus Status { get; set; }
+        public string Status { get; set; }
         public string PositionsJson { get; set; }
 
         [NotMapped]
@@ -26,13 +26,5 @@ namespace retail_backend.Data.Entities
             set => PositionsJson = JsonConvert.SerializeObject(value);
         }
 
-    }
-
-    public enum OrderStatus
-    {
-        New,
-        Accepted,
-        Completed,
-        Cancelled
     }
 }

@@ -9,7 +9,7 @@ namespace retail_backend.Api.Dtos
     {
         public int Id { get; set; }
         public List<Position> Positions { get; set; } = new List<Position>();
-        public int Status { get; set; } = 0;
+        public string Status { get; set; }
     }
 
     public class OrderShortReadDto

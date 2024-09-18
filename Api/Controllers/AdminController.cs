@@ -25,24 +25,11 @@ namespace retail_backend.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("status")]
-        public IActionResult Status()
-        {
-            return Ok();
-        }
-
-
         [HttpGet("product")]
         public async Task<ActionResult<List<Product>>> GetAllProducts()
         {
             Console.WriteLine("--> hitted get all products");
             return await _productRepository.GetAllAsync();
-        }
-
-        [HttpGet("category")]
-        public async Task<ActionResult<List<Category>>> GetAllCategories()
-        {
-            return await _categoryRepository.GetAllAsync();
         }
 
         [HttpGet("product/{id}")]
@@ -57,12 +44,48 @@ namespace retail_backend.Api.Controllers
             {
                 return NotFound();
             }
-            catch (Exception ex)
+            catch
             {
                 return BadRequest();
             }
 
             return product;
+        }
+
+        [HttpPost("product")]
+        public async Task<ActionResult> CreateProduct(ProductCreateDto productDto)
+        {
+            var product = _mapper.Map<Product>(productDto);
+            _productRepository.Create(product);
+            var isOk = await _categoryRepository.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("product")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
+                return NotFound();
+
+            _productRepository.Delete(product);
+            var isOk = await _categoryRepository.SaveChangesAsync();
+            return Ok();
+        }
+
+        //переделать на дто
+        [HttpPut("product")]
+        public async Task<ActionResult<Product>> UpdateProduct(Product product)
+        {
+            _productRepository.Update(product);
+            var isOk = await _categoryRepository.SaveChangesAsync();
+            return await _productRepository.GetByIdAsync(product.Id);
+        }
+
+        [HttpGet("category")]
+        public async Task<ActionResult<List<Category>>> GetAllCategories()
+        {
+            return await _categoryRepository.GetAllAsync();
         }
 
         [HttpGet("category/{id}")]
@@ -94,27 +117,6 @@ namespace retail_backend.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("product")]
-        public async Task<ActionResult> CreateProduct(ProductCreateDto productDto)
-        {
-            var product = _mapper.Map<Product>(productDto);
-            _productRepository.Create(product);
-            var isOk = await _categoryRepository.SaveChangesAsync();
-            return Ok();
-        }
-
-        [HttpDelete("product")]
-        public async Task<ActionResult> DeleteProduct(int id)
-        {
-            var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
-                return NotFound();
-
-            _productRepository.Delete(product);
-            var isOk = await _categoryRepository.SaveChangesAsync();
-            return Ok();
-        }
-
         [HttpDelete("category")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
@@ -124,15 +126,6 @@ namespace retail_backend.Api.Controllers
             _categoryRepository.Delete(category);
             var isOk = await _categoryRepository.SaveChangesAsync();
             return Ok();
-        }
-
-        //переделать на дто
-        [HttpPut("product")]
-        public async Task<ActionResult<Product>> UpdateProduct(Product product)
-        {
-            _productRepository.Update(product);
-            var isOk = await _categoryRepository.SaveChangesAsync();
-            return await _productRepository.GetByIdAsync(product.Id);
         }
 
         [HttpPut("category")]

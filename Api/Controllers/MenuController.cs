@@ -36,7 +36,6 @@ namespace retail_backend.Api.Controllers
         [HttpGet("category/{id}")]
         public async Task<ActionResult<List<ProductReadDto>>> GetProductsInCategory(int id)
         {
-            Console.WriteLine("--> Hitted get Products");
             List<Product> products = new List<Product>();
             try
             {

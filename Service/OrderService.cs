@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using retail_backend.Api.Dtos;
 using retail_backend.Data.Entities;
+using retail_backend.Data.Helpers;
 using retail_backend.Data.Repositories;
 
 namespace retail_backend.Service
@@ -26,7 +27,7 @@ namespace retail_backend.Service
         {
             var order = new Order()
             {
-                Status = OrderStatus.New,
+                Status = DataConstants.OrderStatus_New,
                 ClientUserName = request.UserName,
                 Positions = request.Positions
             };
@@ -57,7 +58,7 @@ namespace retail_backend.Service
             var productDtos = _mapepr.Map<List<ProductReadDto>>(products);
 
             var orderDto = new OrderReadDto();
-            orderDto.Status = (int)order.Status;
+            orderDto.Status = DataConstants.OrderStatus_New;
             orderDto.Id = order.Id;
 
             foreach (var pos in order.Positions)
@@ -73,7 +74,6 @@ namespace retail_backend.Service
                     Product = product,
                     Count = pos.Value
                 });
-
             }
 
             return orderDto;
