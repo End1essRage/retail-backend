@@ -33,8 +33,8 @@ namespace retail_backend.Api.Controllers
             return Ok(_mapper.Map<List<CategoryReadDto>>(categories));
         }
 
-        [HttpGet("category/{id}")]
-        public async Task<ActionResult<List<ProductReadDto>>> GetProductsInCategory(int id)
+        [HttpGet("product")]
+        public async Task<ActionResult<List<ProductReadDto>>> GetProductsInCategory([FromQuery] int id)
         {
             List<Product> products = new List<Product>();
             try
