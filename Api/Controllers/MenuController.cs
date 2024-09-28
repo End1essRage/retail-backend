@@ -29,22 +29,23 @@ namespace retail_backend.Api.Controllers
         public async Task<ActionResult<List<CategoryReadDto>>> GetCategories()
         {
             Console.WriteLine("--> Hitted GetCategories");
+
             var categories = await _categoryRepository.GetAllAsync();
+
             return Ok(_mapper.Map<List<CategoryReadDto>>(categories));
         }
 
         [HttpGet("product")]
         public async Task<ActionResult<List<ProductReadDto>>> GetProductsInCategory([FromQuery] int id)
         {
+            Console.WriteLine("--> Hitted GetProductsInCategory");
+
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
+                return BadRequest("No category");
+
             List<Product> products = new List<Product>();
-            try
-            {
-                products = await _productRepository.GetProductsByCategoryId(id);
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            products = await _productRepository.GetProductsByCategoryId(id);
 
             if (products.Count == 0)
                 return NotFound();
@@ -53,10 +54,11 @@ namespace retail_backend.Api.Controllers
         }
 
         [HttpGet("product/{id}")]
-        public async Task<ActionResult<ProductReadDto>> GetProductInfo(int id)
+        public async Task<ActionResult<ProductReadDto>> GetProduct(int id)
         {
-            Product product;
-            product = await _productRepository.GetByIdAsync(id);
+            Console.WriteLine("--> Hitted GetProduct");
+
+            var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
                 return NotFound();
 

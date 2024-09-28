@@ -24,13 +24,21 @@ namespace retail_backend.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOrder([FromBody] CreateOrderRequest request)
         {
-            await _orderService.CreateOrder(request);
-            return Ok(request);
+            Console.WriteLine("--> Hitted CreateOrder");
+
+            if (request.Positions.Count < 1)
+                return BadRequest();
+
+            var result = await _orderService.CreateOrder(request);
+
+            return result ? Ok() : BadRequest();
         }
 
         [HttpGet]
         public async Task<ActionResult<List<OrderShortReadDto>>> GetOrders(string userName)
         {
+            Console.WriteLine("--> Hitted GetOrders");
+
             return Ok(await _orderService.GetUserOrders(userName));
         }
 
@@ -38,7 +46,13 @@ namespace retail_backend.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderReadDto>> GetOrder(int id)
         {
-            return Ok(await _orderService.GetOrderById(id));
+            Console.WriteLine("--> Hitted GetOrder");
+
+            var order = await _orderService.GetOrderById(id);
+            if (order == null)
+                return NotFound();
+
+            return Ok(order);
         }
 
 
@@ -46,8 +60,22 @@ namespace retail_backend.Api.Controllers
         [HttpPatch("{id}/status")]
         public async Task<ActionResult<OrderReadDto>> ChangeStatus(int id, [FromQuery] int targetStatus)
         {
-            await _orderService.ChangeOrderStatus(id, targetStatus);
-            return Ok(await _orderService.GetOrderById(id));
+            Console.WriteLine("--> Hitted ChangeStatus");
+
+            try
+            {
+                await _orderService.ChangeOrderStatus(id, targetStatus);
+            }
+            catch (ArgumentException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }

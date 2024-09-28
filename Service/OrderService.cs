@@ -23,7 +23,7 @@ namespace retail_backend.Service
             _mapepr = mapepr;
         }
 
-        public async Task CreateOrder(CreateOrderRequest request)
+        public async Task<bool> CreateOrder(CreateOrderRequest request)
         {
             var order = new Order()
             {
@@ -34,7 +34,7 @@ namespace retail_backend.Service
 
             _orderRepo.Create(order);
 
-            await _orderRepo.SaveChangesAsync();
+            return await _orderRepo.SaveChangesAsync() > 0;
         }
 
         public async Task<List<OrderShortReadDto>> GetUserOrders(string userName)
@@ -82,10 +82,16 @@ namespace retail_backend.Service
         public async Task ChangeOrderStatus(int orderId, int targetStatus)
         {
             var order = await _orderRepo.GetByIdAsync(orderId);
+            if (order == null)
+                throw new ArgumentException("");
+
             order.Status = (OrderStatus)targetStatus;
 
             _orderRepo.Update(order);
-            await _orderRepo.SaveChangesAsync();
+            var result = await _orderRepo.SaveChangesAsync();
+
+            if (result < 1)
+                throw new Exception();
         }
     }
 }
