@@ -19,6 +19,7 @@ builder.Services.AddScoped<ICategoryRepository, CategoryLocalRepository>();
 builder.Services.AddScoped<IProductRepository, ProductLocalRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderLocalRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ConfKeysRepository, ConfKeysRepository>();
 
 builder.Services.AddControllers();
 

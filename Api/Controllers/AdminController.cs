@@ -16,13 +16,34 @@ namespace retail_backend.Api.Controllers
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
+        private readonly ConfKeysRepository _consRepository;
         private readonly IMapper _mapper;
 
-        public AdminController(ICategoryRepository categoryRepository, IProductRepository productRepository, IMapper mapper)
+        public AdminController(ICategoryRepository categoryRepository, IProductRepository productRepository, ConfKeysRepository consRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
+            _consRepository = consRepository;
             _mapper = mapper;
+        }
+        //Constants
+
+        [HttpGet("conf")]
+        public async Task<ActionResult<string>> GetConfData([FromQuery] string key)
+        {
+            var data = await _consRepository.ReadData(key);
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(data);
+        }
+
+        [HttpPost("conf")]
+        public async Task<ActionResult<bool>> SetConfData([FromQuery] string key, [FromQuery] string value)
+        {
+            return await _consRepository.AddOrUpdateData(key, value);
         }
 
         [HttpGet("product")]
