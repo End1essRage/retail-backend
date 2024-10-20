@@ -10,7 +10,7 @@ namespace retail_backend.Service
 {
     public interface IOrderService
     {
-        Task<bool> CreateOrder(CreateOrderRequest request);
+        Task<int> CreateOrder(CreateOrderRequest request);
         Task<List<OrderShortReadDto>> GetUserOrders(string userName);
         Task<OrderReadDto> GetOrderById(int orderId);
         Task ChangeOrderStatus(int orderId, int targetStatus);

@@ -10,7 +10,7 @@ namespace retail_backend.Data.Repositories
     {
         public Task<List<T>> GetAllAsync();
         public Task<T> GetByIdAsync(int id);
-        public void Create(T entity);
+        public int Create(T entity);
         public void Update(T entity);
         public void Delete(T entity);
         public Task<int> SaveChangesAsync();

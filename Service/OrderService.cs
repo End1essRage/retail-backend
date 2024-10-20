@@ -23,18 +23,17 @@ namespace retail_backend.Service
             _mapepr = mapepr;
         }
 
-        public async Task<bool> CreateOrder(CreateOrderRequest request)
+        public async Task<int> CreateOrder(CreateOrderRequest request)
         {
-            var order = new Order()
+            var model = new Order()
             {
                 Status = OrderStatus.New,
                 ClientUserName = request.UserName,
                 Positions = request.Positions
             };
-
-            _orderRepo.Create(order);
-
-            return await _orderRepo.SaveChangesAsync() > 0;
+            var id = _orderRepo.Create(model);
+            await _orderRepo.SaveChangesAsync();
+            return id;
         }
 
         public async Task<List<OrderShortReadDto>> GetUserOrders(string userName)
@@ -47,6 +46,11 @@ namespace retail_backend.Service
         public async Task<OrderReadDto> GetOrderById(int orderId)
         {
             var order = await _orderRepo.GetByIdAsync(orderId);
+            if (order == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             //Получаем все продукты
             var ids = new List<int>();
             foreach (var pos in order.Positions)

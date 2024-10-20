@@ -22,7 +22,7 @@ namespace retail_backend.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateOrder([FromBody] CreateOrderRequest request)
+        public async Task<ActionResult<int>> CreateOrder([FromBody] CreateOrderRequest request)
         {
             Console.WriteLine("--> Hitted CreateOrder");
 
@@ -31,7 +31,7 @@ namespace retail_backend.Api.Controllers
 
             var result = await _orderService.CreateOrder(request);
 
-            return result ? Ok() : BadRequest();
+            return Ok(result);
         }
 
         [HttpGet]

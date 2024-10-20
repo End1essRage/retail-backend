@@ -15,9 +15,10 @@ namespace retail_backend.Data.Repositories
             _context = context;
         }
 
-        public void Create(T entity)
+        public int Create(T entity)
         {
-            _context.Set<T>().Add(entity);
+            var item = _context.Set<T>().Add(entity);
+            return item.Entity.Id;
         }
 
         public void Delete(T entity)
