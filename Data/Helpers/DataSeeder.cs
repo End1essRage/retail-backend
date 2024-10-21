@@ -13,26 +13,27 @@ namespace retail_backend.Data.Helpers
         {
             var categories = new List<Category>
             {
-                new Category(){Id = 1, Name = "Осетинские пироги", Parent = 2},
+                new Category(){Id = 1, Name = "Осетинские пироги"},
                 new Category(){Id = 2,Name = "Хачапури"},
                 new Category(){Id = 3,Name = "Сеты"},
                 new Category(){Id = 4,Name = "Пицца"},
                 new Category(){Id = 5,Name = "Выпечка"},
-                new Category(){Id = 6,Name = "Хлеб", Parent = 5},
+                new Category(){Id = 6,Name = "Хлеб"},
                 new Category(){Id = 7,Name = "Десерты"},
                 new Category(){Id = 8,Name = "Напитки"},
+                //parents
             };
 
             var products = new List<Product>{
-                new Product(){Name = "С Мясом", CategoryId = 1, Description = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
-                new Product(){Name = "С Картофелем", CategoryId = 1, Description = ""},
-                new Product(){Name = "С Индейкой", CategoryId = 1, Description = ""},
-                new Product(){Name = "По-имеретински", CategoryId = 2, Description = ""},
-                new Product(){Name = "По-мигрельски", CategoryId = 2, Description = ""},
-                new Product(){Name = "Пщ-аджарски с мясом", CategoryId = 2, Description = ""},
+                new Product(){Name = "Осетинский пирог с Мясом", CategoryId = 1, Description = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+                new Product(){Name = "Осетинский пирог с Картофелем", CategoryId = 1, Description = ""},
+                new Product(){Name = "Осетинский пирог с Индейкой", CategoryId = 1, Description = ""},
+                new Product(){Name = "Хачапури По-имеретински", CategoryId = 2, Description = ""},
+                new Product(){Name = "Хачапури По-мигрельски", CategoryId = 2, Description = ""},
+                new Product(){Name = "Хачапури Пщ-аджарски с мясом", CategoryId = 2, Description = ""},
                 new Product(){Name = "Хачапури по-имеретински, по аджарски и кока кола", CategoryId = 3, Description = ""},
                 new Product(){Name = "Сет с осетинскими пирогами", CategoryId = 3, Description = ""},
-                new Product(){Name = "Мясная", CategoryId = 4, Description = ""},
+                new Product(){Name = "Пицца Мясная", CategoryId = 4, Description = ""},
                 new Product(){Name = "Плюшка Московская", CategoryId = 5, Description = ""},
                 new Product(){Name = "Круасан классический", CategoryId = 5, Description = ""},
                 new Product(){Name = "Улитка с маком", CategoryId = 5, Description = ""},

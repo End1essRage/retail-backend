@@ -12,6 +12,7 @@ namespace retail_backend.Data.Helpers
             {OrderStatus.Accepted, "OrderStatus_Accepted"},
             {OrderStatus.Completed, "OrderStatus_Completed"},
             {OrderStatus.Cancelled, "OrderStatus_Cancelled"},
+            {OrderStatus.Closed, "OrderStatus_Closed"},
         };
     }
 
@@ -20,6 +21,7 @@ namespace retail_backend.Data.Helpers
         New,
         Accepted,
         Completed,
-        Cancelled
+        Cancelled,
+        Closed
     }
 }
