@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using retail_backend.Data.Entities;
 using retail_backend.Data.Repositories;
+using retail_backend.Data.Repositories.Abstractions;
 
 namespace retail_backend.Data.Helpers
 {
@@ -53,6 +54,9 @@ namespace retail_backend.Data.Helpers
 
                 var productRepository = serviceScope.ServiceProvider.GetService<IProductRepository>();
                 products.ForEach(product => productRepository.Create(product));
+
+                var userRepository = serviceScope.ServiceProvider.GetService<IUserRepository>();
+                userRepository.Create(new TelegramUser() { UserName = "envyloup", Role = UserRole.Manager });
 
                 await categoryRepository.SaveChangesAsync();
             }

@@ -28,4 +28,13 @@ namespace retail_backend.Data.Entities
         }
 
     }
+
+    public enum OrderStatus
+    {
+        New,
+        Accepted,
+        Completed,
+        Cancelled,
+        Closed
+    }
 }

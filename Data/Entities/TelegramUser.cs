@@ -8,6 +8,13 @@ namespace retail_backend.Data.Entities
     public class TelegramUser : BaseEntity
     {
         public string UserName { get; set; }
-        public bool IsAdmin { get; set; }
+        public UserRole Role { get; set; }
+    }
+
+    public enum UserRole
+    {
+        Admin,
+        Manager,
+        Client
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using retail_backend.Data.Entities;
 
 namespace retail_backend.Data.Helpers
 {
@@ -14,14 +15,5 @@ namespace retail_backend.Data.Helpers
             {OrderStatus.Cancelled, "OrderStatus_Cancelled"},
             {OrderStatus.Closed, "OrderStatus_Closed"},
         };
-    }
-
-    public enum OrderStatus
-    {
-        New,
-        Accepted,
-        Completed,
-        Cancelled,
-        Closed
     }
 }
