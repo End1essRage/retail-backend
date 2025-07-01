@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using retail_backend.Data.Helpers;
 using retail_backend.Data.Repositories;
+using retail_backend.Data.Repositories.Abstractions;
+using retail_backend.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,10 @@ builder.Services.AddDbContext<retail_backend.Data.AppContext>(opts =>
 
 builder.Services.AddScoped<ICategoryRepository, CategoryLocalRepository>();
 builder.Services.AddScoped<IProductRepository, ProductLocalRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderLocalRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ConfKeysRepository, ConfKeysRepository>();
 
 builder.Services.AddControllers();
 

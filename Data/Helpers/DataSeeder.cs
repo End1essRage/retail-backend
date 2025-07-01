@@ -4,35 +4,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using retail_backend.Data.Entities;
 using retail_backend.Data.Repositories;
+using retail_backend.Data.Repositories.Abstractions;
 
 namespace retail_backend.Data.Helpers
 {
     public static class DataSeeder
     {
-        public static void Seed(IApplicationBuilder applicationBuilder)
+        public static async void Seed(IApplicationBuilder applicationBuilder)
         {
             var categories = new List<Category>
             {
-                new Category(){Name = "Осетинские пироги"},
-                new Category(){Name = "Хачапури"},
-                new Category(){Name = "Сеты"},
-                new Category(){Name = "Пицца"},
-                new Category(){Name = "Выпечка"},
-                new Category(){Name = "Хлеб"},
-                new Category(){Name = "Десерты"},
-                new Category(){Name = "Напитки"},
+                new Category(){Id = 1, Name = "Осетинские пироги"},
+                new Category(){Id = 2,Name = "Хачапури"},
+                new Category(){Id = 3,Name = "Сеты"},
+                new Category(){Id = 4,Name = "Пицца"},
+                new Category(){Id = 5,Name = "Выпечка"},
+                new Category(){Id = 6,Name = "Хлеб"},
+                new Category(){Id = 7,Name = "Десерты"},
+                new Category(){Id = 8,Name = "Напитки"},
+                //parents
             };
 
             var products = new List<Product>{
-                new Product(){Name = "С Мясом", CategoryId = 1, Description = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
-                new Product(){Name = "С Картофелем", CategoryId = 1, Description = ""},
-                new Product(){Name = "С Индейкой", CategoryId = 1, Description = ""},
-                new Product(){Name = "По-имеретински", CategoryId = 2, Description = ""},
-                new Product(){Name = "По-мигрельски", CategoryId = 2, Description = ""},
-                new Product(){Name = "Пщ-аджарски с мясом", CategoryId = 2, Description = ""},
+                new Product(){Name = "Осетинский пирог с Мясом", CategoryId = 1, Description = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+                new Product(){Name = "Осетинский пирог с Картофелем", CategoryId = 1, Description = ""},
+                new Product(){Name = "Осетинский пирог с Индейкой", CategoryId = 1, Description = ""},
+                new Product(){Name = "Хачапури По-имеретински", CategoryId = 2, Description = ""},
+                new Product(){Name = "Хачапури По-мигрельски", CategoryId = 2, Description = ""},
+                new Product(){Name = "Хачапури Пщ-аджарски с мясом", CategoryId = 2, Description = ""},
                 new Product(){Name = "Хачапури по-имеретински, по аджарски и кока кола", CategoryId = 3, Description = ""},
                 new Product(){Name = "Сет с осетинскими пирогами", CategoryId = 3, Description = ""},
-                new Product(){Name = "Мясная", CategoryId = 4, Description = ""},
+                new Product(){Name = "Пицца Мясная", CategoryId = 4, Description = ""},
                 new Product(){Name = "Плюшка Московская", CategoryId = 5, Description = ""},
                 new Product(){Name = "Круасан классический", CategoryId = 5, Description = ""},
                 new Product(){Name = "Улитка с маком", CategoryId = 5, Description = ""},
@@ -48,10 +50,15 @@ namespace retail_backend.Data.Helpers
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 var categoryRepository = serviceScope.ServiceProvider.GetService<ICategoryRepository>();
-                categories.ForEach(async category => await categoryRepository.CreateCategory(category));
+                categories.ForEach(category => categoryRepository.Create(category));
 
                 var productRepository = serviceScope.ServiceProvider.GetService<IProductRepository>();
-                products.ForEach(async product => await productRepository.CreateProduct(product));
+                products.ForEach(product => productRepository.Create(product));
+
+                var userRepository = serviceScope.ServiceProvider.GetService<IUserRepository>();
+                userRepository.Create(new TelegramUser() { UserName = "envyloup", Role = UserRole.Manager });
+
+                await categoryRepository.SaveChangesAsync();
             }
         }
     }

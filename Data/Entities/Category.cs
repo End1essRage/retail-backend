@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace retail_backend.Data.Entities
 {
-    public class Category
+    public class Category : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
+        public int Parent { get; set; }
         public bool IsActive { get; set; }
     }
 }

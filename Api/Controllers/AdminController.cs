@@ -16,33 +16,22 @@ namespace retail_backend.Api.Controllers
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
+        private readonly ConfKeysRepository _consRepository;
         private readonly IMapper _mapper;
 
-        public AdminController(ICategoryRepository categoryRepository, IProductRepository productRepository, IMapper mapper)
+        public AdminController(ICategoryRepository categoryRepository, IProductRepository productRepository, ConfKeysRepository consRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
+            _consRepository = consRepository;
             _mapper = mapper;
         }
-
-        [HttpGet("status")]
-        public IActionResult Status()
-        {
-            return Ok();
-        }
-
-
+        //Constants
         [HttpGet("product")]
         public async Task<ActionResult<List<Product>>> GetAllProducts()
         {
             Console.WriteLine("--> hitted get all products");
-            return await _productRepository.GetAllProducts();
-        }
-
-        [HttpGet("category")]
-        public async Task<ActionResult<List<Category>>> GetAllCategories()
-        {
-            return await _categoryRepository.GetAllCategories();
+            return await _productRepository.GetAllAsync();
         }
 
         [HttpGet("product/{id}")]
@@ -51,18 +40,54 @@ namespace retail_backend.Api.Controllers
             Product product;
             try
             {
-                product = await _productRepository.GetProductById(id);
+                product = await _productRepository.GetByIdAsync(id);
             }
             catch (ArgumentException ex)
             {
                 return NotFound();
             }
-            catch (Exception ex)
+            catch
             {
                 return BadRequest();
             }
 
             return product;
+        }
+
+        [HttpPost("product")]
+        public async Task<ActionResult> CreateProduct(ProductCreateDto productDto)
+        {
+            var product = _mapper.Map<Product>(productDto);
+            _productRepository.Create(product);
+            var isOk = await _categoryRepository.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("product")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
+                return NotFound();
+
+            _productRepository.Delete(product);
+            var isOk = await _categoryRepository.SaveChangesAsync();
+            return Ok();
+        }
+
+        //переделать на дто
+        [HttpPut("product")]
+        public async Task<ActionResult<Product>> UpdateProduct(Product product)
+        {
+            _productRepository.Update(product);
+            var isOk = await _categoryRepository.SaveChangesAsync();
+            return await _productRepository.GetByIdAsync(product.Id);
+        }
+
+        [HttpGet("category")]
+        public async Task<ActionResult<List<Category>>> GetAllCategories()
+        {
+            return await _categoryRepository.GetAllAsync();
         }
 
         [HttpGet("category/{id}")]
@@ -71,7 +96,7 @@ namespace retail_backend.Api.Controllers
             Category category;
             try
             {
-                category = await _categoryRepository.GetCategoryById(id);
+                category = await _categoryRepository.GetByIdAsync(id);
             }
             catch (ArgumentException ex)
             {
@@ -89,45 +114,28 @@ namespace retail_backend.Api.Controllers
         public async Task<ActionResult> CreateCategory(CategoryCreateDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
-            await _categoryRepository.CreateCategory(category);
-            return Ok();
-        }
-
-        [HttpPost("product")]
-        public async Task<ActionResult> CreateProduct(ProductCreateDto productDto)
-        {
-            var product = _mapper.Map<Product>(productDto);
-            await _productRepository.CreateProduct(product);
-            return Ok();
-        }
-
-        [HttpDelete("product")]
-        public async Task<ActionResult> DeleteProduct(int id)
-        {
-            await _productRepository.DeleteProductById(id);
+            _categoryRepository.Create(category);
+            var isOk = await _categoryRepository.SaveChangesAsync();
             return Ok();
         }
 
         [HttpDelete("category")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
-            await _categoryRepository.DeleteCategoryById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
+                return NotFound();
+            _categoryRepository.Delete(category);
+            var isOk = await _categoryRepository.SaveChangesAsync();
             return Ok();
-        }
-
-        //переделать на дто
-        [HttpPut("product")]
-        public async Task<ActionResult<Product>> UpdateProduct(Product product)
-        {
-            await _productRepository.UpdateProduct(product);
-            return await _productRepository.GetProductById(product.Id);
         }
 
         [HttpPut("category")]
         public async Task<ActionResult<Category>> UpdateCategory(Category category)
         {
-            await _categoryRepository.UpdateCategory(category);
-            return await _categoryRepository.GetCategoryById(category.Id);
+            _categoryRepository.Update(category);
+            var isOk = await _categoryRepository.SaveChangesAsync();
+            return await _categoryRepository.GetByIdAsync(category.Id);
         }
     }
 }

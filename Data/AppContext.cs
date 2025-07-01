@@ -16,6 +16,9 @@ namespace retail_backend.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<TelegramUser> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ConfKeys> Constants { get; set; }
     }
 }
